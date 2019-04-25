@@ -1,0 +1,53 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+    {% block 'menu' %} {% endblock %}
+        <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="announcements post-preview mb-5 bg-light p-5">
+                <h5 class="post-title pb-3 text-center"> Announcements:</h5>
+                 {% if announcement_list %}
+                     {% for post in announcement_list.all %}
+                        {% if post.show %}
+                        <p class="mb-0 post-date">{{post.posted}}</p>
+                        <p class="post-subtitle mt-1 mb-0" style="letter-spacing:0.7px;
+                            {% if post.color == 'Red' %}
+                                color:red
+                            {% elif post.color == 'Yellow' %}
+                                color:#ffc200
+                            {% elif post.color == 'Green' %}
+                                color:#00b300;
+                            {% else %}
+                                color:gray
+                            {% endif %}
+                        "><b>{{post.title}}.</b>
+                            {% if post.body %}
+                                <p class="m-0 mt-1 post-body">{{post.body}}</p>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                 {% else %}
+                    <p>There are no announcements yet.</p>
+                 {% endif %}
+            </div>
+            <div class="post-preview mt-5">
+                 {% load custom_tags %}
+                 {% get_menu as section_list %}
+                 {% for i in section_list %}
+                    {% if i.show %}
+                    <a href="{% url 'section' i.id %}" class="mb-5">
+                        <div class="my-5">
+                            <h4 class="post-title mb-3 d-flex justify-content-between bg-light p-3">
+                              {{i.title}}
+                                <i class="fas fa-bookmark mt-1"></i>
+                            </h4>
+                            <p class="post-subtitle">
+                              {{i.description}}
+                            </p>
+                        </div>
+                    </a>
+                {% endif %}
+                {% endfor %}
+            </div>
+      </div>
+{% endblock %}

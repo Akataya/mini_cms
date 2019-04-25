@@ -1,0 +1,30 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+<div class="container offices">
+    <h4 class="m-5"><b>Care Finders Total Care Offices</b></h4>
+    <div>
+        <ul>
+            <p>The Firm currently has <b>{{object_list.all.count}}</b> office location{{object_list|pluralize}}:</p>
+
+            {% for item in object_list.all %}
+                <div class="office-header d-flex"><i class="far fa-building mr-2 mt-1"></i>
+                    <h5>{{item.abbreviation}} ({{item.name}})</h5>
+                </div>
+                {% if item.description %}
+                    <p class="ml-2 office-description">{{item.description|safe}}</p>
+                {% endif %}
+                <p class="col-lg-10 ml-2"><b>Phone number:</b> {{item.phone_number}}<br/>
+                    {% if item.fax_number %}
+                        <b>Fax number:</b> {{item.fax_number}}<br/>
+                    {% endif %}
+                <b>Address:</b> {{item.address}}</p>
+                <hr style="" class="my-5"/>
+            {% endfor %}
+
+        </ul>
+    </div>
+
+</div>
+{% endblock %}

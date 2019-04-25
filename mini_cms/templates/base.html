@@ -1,0 +1,106 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mini CMS</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mini CMS</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Custom fonts for this template -->
+    <link href="{% static 'fontawesome-free/css/all.min.css' %} " rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800'
+          rel='stylesheet' type='text/css'>
+    <!-- Custom styles for this template -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+</head>
+
+<body>
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg bg-light fixed-top" id="mainNav" style="opacity:0.9;">
+          <div class="container">
+              <a href="{% url 'index' %}" class="nav-link ml-auto" data-toggle="tooltip" data-placement="bottom" title="Home">
+                  <i class="fas fa-home"></i>
+              </a>
+              <button style="color:#243B82; font-size: 1.1em;" class="navbar-toggler navbar-toggler-right px-0 mx-0 ml-auto"
+                      type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+                      aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    {% load custom_tags %}
+                    {% get_menu as section_list %}
+                    {% for i in section_list %}
+                        {% if i.show %}
+                            <li class="ml-auto">
+                                <a class="nav-link" href="{% url 'section' i.id %}">
+                                    <b>{{i.title}}</b>
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% get_office_list_not_empty as offices %}
+                    {% if offices %}
+                    <li class="ml-auto">
+                        <a class="nav-link" href="{% url 'offices' %}"><b>Offices</b></a>
+                    </li>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                        <div class="ml-auto mt-1">
+                            <a href="{% url 'logout' %}" data-toggle="tooltip" data-placement="bottom" title="Sign Out">
+                                <i class="nav-link fas fa-sign-out-alt"></i>
+                            </a>
+                        </div>
+                    {% endif %}
+                </ul>
+              </div>
+          </div>
+      </nav>
+
+      <!-- Page Header -->
+      <header class="masthead"></header>
+
+      <!-- Page Content -->
+      <div class="container">
+        <div class="row">
+            {% block content %} {% endblock %}
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+              <p class="copyright text-muted">
+                  <span>&copy;
+                      <script>document.write(new Date().getFullYear());</script> Company Name
+                  </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <!-- Bootstrap core JavaScript -->
+      <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %} "></script>
+      <!-- Custom scripts for this template -->
+      <script src="{% static 'js/mini-cms.min.js' %}"></script>
+</body>
+
+</html>
