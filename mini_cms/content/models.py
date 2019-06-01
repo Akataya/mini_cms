@@ -31,7 +31,7 @@ class Announcement(models.Model):
 class Section(models.Model):
     title = models.CharField(max_length=100)
     """Used in section previews"""
-    description = models.TextField(max_length=300, null=True, blank=True)
+    description = models.TextField(max_length=1000, null=True, blank=True)
     show = models.BooleanField(default=True)
     effective_date = models.DateField(auto_now_add=True, null=True)
 
@@ -41,7 +41,7 @@ class Section(models.Model):
 
 class SectionItem(models.Model):
     title = models.CharField(max_length=100)
-    body = RichTextField(max_length=5000)
+    body = RichTextField(max_length=50000)
     show = models.BooleanField(default=True)
     section = models.ForeignKey(Section, on_delete=models.CASCADE)
     effective_date = models.DateField(null=True, blank=True)
@@ -57,7 +57,7 @@ class Office(models.Model):
     address = models.CharField(max_length=300)
     phone_number = PhoneNumberField()
     fax_number = PhoneNumberField(blank=True)
-    description = models.TextField(max_length=1000, null=True, blank=True)
+    description = models.TextField(max_length=50000, null=True, blank=True)
 
     def __str__(self):
         return f'{self.abbreviation}'
